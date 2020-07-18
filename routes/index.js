@@ -7,7 +7,7 @@ const { MongoUrl } = require('./Config/keys')
 var multer  = require('multer')
 const products = require('./models/products')
 
-mongoose.connect(MongoUrl , { useNewUrlParser: true })
+mongoose.connect(MongoUrl , { useNewUrlParser: true ,useUnifiedTopology: true  })
 
 
 
@@ -61,6 +61,18 @@ router.delete('/products/:id'  ,function(req, res) {
   .then( result => res.json(result) )
   
   });
+
+  router.put('/products/:id'  ,function(req, res) {
+  
+
+
+    console.log(req.body)
+    let { title , price , imageUrl } = req.body ;
+     
+    products.findByIdAndUpdate(req.params.id , { title , price , imageUrl })
+    .then( result => res.json('Update') )
+    
+    });
 
   router.get('/products/:id'  ,function(req, res) {
   
